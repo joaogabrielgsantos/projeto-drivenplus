@@ -1,6 +1,6 @@
 function SignPlanPage (){
     return (
-        <></>
+        <><h1>Sign Plan Page</h1></>
     )
 }
 

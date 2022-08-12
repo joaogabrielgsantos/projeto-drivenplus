@@ -3,10 +3,10 @@ const BASE_URL = "https://mock-api.driven.com.br/api/v4/driven-plus"
 
 
 function createHeaders() {
-    const auth = localStorage.getItem('token');
+    const auth = JSON.parse(localStorage.getItem('drivenplus'));
     const config = {
         headers: {
-            Authorization: `Bearer ${auth}`
+            Authorization: `Bearer ${auth.token}`
         }
     };
 
@@ -26,4 +26,11 @@ function postLogin(body) {
 }
 
 
-export { postCadastro, postLogin, createHeaders }
+function getPlanos() {
+    const promise = axios.get(`${BASE_URL}/subscriptions/memberships`, createHeaders());
+    return promise
+}
+
+
+
+export { postCadastro, postLogin, createHeaders, getPlanos }

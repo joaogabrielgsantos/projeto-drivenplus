@@ -9,7 +9,7 @@ const Auth = () => {
 
 const ProtectedRoutes = () => {
     const isAuth = Auth()
-    return isAuth ? <Outlet/> : <Navigate to="/home" replace />;
+    return isAuth ? <Outlet/> : <Navigate to="/" replace />;
 }
 
 export default ProtectedRoutes;

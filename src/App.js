@@ -1,6 +1,7 @@
+import {  useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./assets/css/globalStyles";
-import UserContext from "./contexts/UserContext";
+import CustomerContext from "./contexts/CustomerContext";
 import HomePage from "./pages/HomePage";
 import PlansPage from "./pages/PlansPage";
 import SignInPage from "./pages/SignInPage";
@@ -10,13 +11,15 @@ import ProtectedRoutes from "./services/ProtectedRoutes";
 
 
 function App() {
-
+    const [member, setMember] = useState("")
+    console.log(member);
+    
 
     return (
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <UserContext.Provider>
+                <CustomerContext.Provider value={{member, setMember}}>
                     <Routes>
                         <Route path="/" element={<SignInPage />} />
                         <Route path="/signup" element={<SignUpPage />} />
@@ -27,7 +30,7 @@ function App() {
                             </Route>
                         </Route>
                     </Routes>
-                </UserContext.Provider>
+                </CustomerContext.Provider>
             </BrowserRouter>
 
         </>

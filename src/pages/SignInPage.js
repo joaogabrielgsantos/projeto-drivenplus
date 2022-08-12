@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import Inputs from "../components/Inputs";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Driven from "../assets/images/Driven.png"
 import { postLogin } from "../services/DrivenPlus";
 import { LinkWrap } from "./SignUpPage";
 import styled from "styled-components";
+import CustomerContext from "../contexts/CustomerContext";
 
 
 
@@ -15,6 +16,7 @@ function SignInPage() {
     const [password, setPassword] = useState('')
     const [disable, setDisable] = useState(false)
     const [textButton, setTextButton] = useState("Entrar")
+    const {setMember} = useContext(CustomerContext)
 
     const navigate = useNavigate();
 
@@ -32,17 +34,19 @@ function SignInPage() {
 
         postLogin(body).then(response => {
             const { data } = response
-            console.log(data)
-            const tokenSerializado = JSON.stringify({ token: data.token })
+            console.log(data.membership)
+            const tokenSerializado = JSON.stringify({ ...data })
             localStorage.setItem('drivenplus', tokenSerializado)
-            navigate("/signup");
+            const memberStorage= JSON.parse(localStorage.getItem('drivenplus'));
+            setMember(memberStorage)
+
+            data.membership ? navigate("/home"): navigate("/subscriptions") ;
 
         })
         postLogin(body).catch(response => {
             const { data } = response
             console.log(data);
             alert("Usuário não cadastrado")
-            navigate("/signup");
         })
     }
 
