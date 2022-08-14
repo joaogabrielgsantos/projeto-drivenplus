@@ -2,6 +2,7 @@ import axios from "axios";
 const BASE_URL = "https://mock-api.driven.com.br/api/v4/driven-plus"
 
 
+
 function createHeaders() {
     const auth = JSON.parse(localStorage.getItem('drivenplus'));
     const config = {
@@ -31,6 +32,11 @@ function getPlanos() {
     return promise
 }
 
+function getPlan(idPlan) {
+
+    const promise = axios.get(`${BASE_URL}/subscriptions/memberships/${idPlan}`, createHeaders());
+    return promise
+}
 
 
-export { postCadastro, postLogin, createHeaders, getPlanos }
+export { postCadastro, postLogin, createHeaders, getPlanos, getPlan }

@@ -35,8 +35,8 @@ function SignInPage() {
         postLogin(body).then(response => {
             const { data } = response
             console.log(data.membership)
-            const tokenSerializado = JSON.stringify({ ...data })
-            localStorage.setItem('drivenplus', tokenSerializado)
+            const memberSerializado = JSON.stringify({ ...data })
+            localStorage.setItem('drivenplus', memberSerializado)
             const memberStorage= JSON.parse(localStorage.getItem('drivenplus'));
             setMember(memberStorage)
 
@@ -46,10 +46,12 @@ function SignInPage() {
         postLogin(body).catch(response => {
             const { data } = response
             console.log(data);
-            alert("Usuário não cadastrado")
+            alert("Usuário não encontrado")
+            window.location.reload(false);
         })
     }
 
+    
 
 
 

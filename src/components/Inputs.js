@@ -29,7 +29,16 @@ input {
         color: #7E7E7E;
    }
 }
-
+div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    input{
+        width: 146px;
+        padding-left: 6px;
+        
+    }
+}
 
 button {
     width: 299px;

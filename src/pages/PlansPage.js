@@ -1,54 +1,66 @@
 import { useContext, useEffect, useState } from "react";
 import Container from "../components/Container";
-import CustomerContext from "../contexts/CustomerContext";
 import { getPlanos } from "../services/DrivenPlus";
-import drivenwhite from "../assets/images/drivenwhite.png"
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import CustomerContext from "../contexts/CustomerContext";
 
 
-function BoxPlan({idPlan, image, price}) {
+
+function BoxPlan({ idPlan, image, price, setIdPlan }) {
+
+
+    function choosePlan(idPlan) {
+        setIdPlan([idPlan])
+        /* const membershipSerializado = JSON.stringify({ ...member, membership: idPlan })
+        localStorage.setItem('drivenplus', membershipSerializado) */
+        
+
+    }
+
     return (
-        <PlanWrapper>
-            <img src={image} alt="Logo média" />
-            <h2>{price}</h2>
-        </PlanWrapper>
+        <Link to={`/subscriptions/${idPlan}`}>
+            <PlanWrapper onClick={() => choosePlan(idPlan)}>
+                <img src={image} alt="Logo média" />
+                <h2>{price}</h2>
+            </PlanWrapper>
+        </Link>
 
     )
 }
 
 
-
 function PlansPage() {
-    const { member } = useContext(CustomerContext)
-    const[planos, setPlanos] = useState ("")
+
+    const [plans, setPlans] = useState([])
+    const {setIdPlan} = useContext(CustomerContext)
+    
+
 
 
     useEffect(() => {
 
         getPlanos().then(response => {
-            const {data} = response
-            setPlanos(data)
-            
+            const { data } = response
+            setPlans(data)
+
         })
 
-    },[]);
-    console.log(planos);
+    }, []);
 
-    function listarPlanos(){
-        if (planos.length === 0) {
+
+    function listarPlanos() {
+        if (plans.length === 0) {
             return (
                 <Loading>Carregando...</Loading>
             )
         } else {
             return (
-                planos.map((item, index) =>
-                    <BoxPlan key={index} price={item.price} image={item.image} idPlan={item.id} />)
+                plans.map((item, index) =>
+                    <BoxPlan key={index} price={item.price} image={item.image} idPlan={item.id} setIdPlan={setIdPlan} />)
             )
         }
-
     }
-
-
 
 
     return (
@@ -84,6 +96,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 margin-bottom: 10px;
+
 
 img{
     width: 130px;
