@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-function Container({children}){
+function Container(props){
     return (
-        <Conteudo>
-            {children}
+        <Conteudo color={props.color}>
+            {props.children}
         </Conteudo>
     )
 }

@@ -9,6 +9,8 @@ import beneficios from "../assets/images/beneficios.png"
 import money from "../assets/images/money.png"
 import backarrow from "../assets/images/backarrow.png"
 
+import ModalPopUp from "../components/ModalPopUp";
+
 
 
 function Benefit({ number, title }) {
@@ -26,8 +28,8 @@ function SignPlanPage() {
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
     const [disable, setDisable] = useState(false)
-    const [textButton, setTextButton] = useState("Assinar")
     const [selectedPlan, setSelectedPlan] = useState("")
+    const [modal, setModal] = useState(false)
 
     const navigate = useNavigate();
 
@@ -59,19 +61,15 @@ function SignPlanPage() {
             )
         }
 
-
-
-
     }
 
-
+    const conditionalModal = (modal ? <ModalPopUp selectedPlan={selectedPlan} modal={modal} setModal={setModal}/> : "")
 
 
 
     function handleSignPlan(e) {
         e.preventDefault();
-        setDisable(true);
-        setTextButton("Assinando...")
+        setModal(!modal)
 
     }
 
@@ -105,9 +103,13 @@ function SignPlanPage() {
                         <input disabled={disable} type="text" placeholder="Validade" value={expirationDate} onChange={e => setExpirationDate(e.target.value)} />
 
                     </div>
-                    <button disabled={disable} type="submit">{textButton}</button>
+                    <button disabled={disable} type="submit">Assinar</button>
                 </Inputs>
             </form>
+
+            {conditionalModal}
+
+
 
         </Container>
     )
@@ -145,8 +147,7 @@ div {
     margin-bottom: 10px;
     img {
         margin-right: 5px;
-    }
-    
+    }  
 }
 
 `;
@@ -174,3 +175,4 @@ position: absolute;
 top: 0;
 
 `;
+
