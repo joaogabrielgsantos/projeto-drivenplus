@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import Container from "../components/Container";
 import profile from "../assets/images/profile.png"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CustomerContext from "../contexts/CustomerContext";
 import { useNavigate } from "react-router-dom";
 import { deletePlan } from "../services/DrivenPlus";
-
 
 
 
@@ -19,12 +18,17 @@ function BenefitButton({ title, link }) {
 
 
 
-
 function HomePage() {
     const { member, setMember } = useContext(CustomerContext)
     console.log(member);
     const { name, membership } = member
     const navigate = useNavigate();
+
+    useEffect(() => {
+
+        setMember((JSON.parse(localStorage.getItem('drivenplus'))))
+
+    }, []);
 
 
 
@@ -52,6 +56,7 @@ function HomePage() {
 
 
     function listBenefitsButtons() {
+        
 
 
         if (membership.length === 0) {
@@ -68,8 +73,8 @@ function HomePage() {
     }
 
 
-
-    return (
+ 
+    return (member ? (
         <Container>
             <WrapperHome>
                 <Header>
@@ -90,7 +95,7 @@ function HomePage() {
             </Footer>
 
         </Container>
-    )
+    ) : <h1>Carregando</h1>)
 }
 
 
