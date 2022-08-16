@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./assets/css/globalStyles";
 import CustomerContext from "./contexts/CustomerContext";
@@ -15,14 +15,33 @@ import ProtectedSignIn from "./services/ProtectedSignIn";
 function App() {
     const [member, setMember] = useState("")
     const [idPlan, setIdPlan] = useState(null)
+    console.log(member);
     console.log(idPlan);
+
+
+    useEffect(() => {
+
+        setMember(JSON.parse(localStorage.getItem('drivenplus')))
+
+    }, []);
+    
+
+
+
+
+
+    const [securityNumber, setSecurityNumber] = useState('')
+    const [expirationDate, setExpirationDate] = useState('')
+    const [cardName, setCardName] = useState('')
+    const [cardNumber, setCardNumber] = useState('')
+    const [selectedPlan, setSelectedPlan] = useState("")
 
 
     return (
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <CustomerContext.Provider value={{ member, setMember, idPlan, setIdPlan }}>
+                <CustomerContext.Provider value={{ member, setMember, idPlan, setIdPlan, securityNumber, setSecurityNumber, expirationDate, setExpirationDate, cardName, setCardName, cardNumber, setCardNumber, selectedPlan, setSelectedPlan }}>
                     <Routes>
                         <Route element={<ProtectedSignIn />}>
                             <Route path="/" element={<SignInPage />} />

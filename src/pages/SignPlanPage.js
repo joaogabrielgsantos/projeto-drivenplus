@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Container from "../components/Container";
 import Inputs from "../components/Inputs";
-/* import CustomerContext from "../contexts/CustomerContext"; */
+import CustomerContext from "../contexts/CustomerContext";
 import { getPlan } from "../services/DrivenPlus";
 import beneficios from "../assets/images/beneficios.png"
 import money from "../assets/images/money.png"
 import backarrow from "../assets/images/backarrow.png"
-
 import ModalPopUp from "../components/ModalPopUp";
 
 
@@ -20,15 +19,10 @@ function Benefit({ number, title }) {
 
 
 function SignPlanPage() {
-    /*  const { member } = useContext(CustomerContext) */
-    const { idPlan } = useParams()
+     const { securityNumber, setSecurityNumber, expirationDate, setExpirationDate, cardName, setCardName, cardNumber, setCardNumber, selectedPlan, setSelectedPlan} = useContext(CustomerContext)
+     const { idPlan } = useParams()
 
-    const [securityNumber, setSecurityNumber] = useState('')
-    const [expirationDate, setExpirationDate] = useState('')
-    const [cardName, setCardName] = useState('')
-    const [cardNumber, setCardNumber] = useState('')
-    const [disable, setDisable] = useState(false)
-    const [selectedPlan, setSelectedPlan] = useState("")
+    
     const [modal, setModal] = useState(false)
 
     const navigate = useNavigate();
@@ -76,7 +70,9 @@ function SignPlanPage() {
     return (
         <Container>
             <BackButton>
-                <img src={backarrow} alt="back" onClick={() => navigate(-1)} />
+                <img src={backarrow} alt="back" onClick={() => {
+                    navigate(-1)
+                    setSelectedPlan([])}} />
             </BackButton>
             <LogoPlan src={selectedPlan.image} alt="logo plan" />
             <TitlePlan>{selectedPlan.name}</TitlePlan>
@@ -96,14 +92,14 @@ function SignPlanPage() {
             </Price>
             <form onSubmit={handleSignPlan}>
                 <Inputs>
-                    <input disabled={disable} type="text" placeholder="Nome impresso no cartão" value={cardName} onChange={e => setCardName(e.target.value)} />
-                    <input disabled={disable} type="text" placeholder="Digitos do cartão" value={cardNumber} onChange={e => setCardNumber(e.target.value)} />
+                    <input type="text" placeholder="Nome impresso no cartão" value={cardName} onChange={e => setCardName(e.target.value)} />
+                    <input type="text" placeholder="Digitos do cartão" value={cardNumber} onChange={e => setCardNumber(e.target.value)} />
                     <div>
-                        <input disabled={disable} type="text" placeholder="Código de segurança" value={securityNumber} onChange={e => setSecurityNumber(e.target.value)} />
-                        <input disabled={disable} type="text" placeholder="Validade" value={expirationDate} onChange={e => setExpirationDate(e.target.value)} />
+                        <input type="text" placeholder="Código de segurança" value={securityNumber} onChange={e => setSecurityNumber(e.target.value)} />
+                        <input type="text" placeholder="Validade" value={expirationDate} onChange={e => setExpirationDate(e.target.value)} />
 
                     </div>
-                    <button disabled={disable} type="submit">Assinar</button>
+                    <button type="submit">Assinar</button>
                 </Inputs>
             </form>
 

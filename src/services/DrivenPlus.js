@@ -39,4 +39,14 @@ function getPlan(idPlan) {
 }
 
 
-export { postCadastro, postLogin, createHeaders, getPlanos, getPlan }
+function postSignPlan(body) {
+    const promise = axios.post(`${BASE_URL}//subscriptions`, body, createHeaders());
+    return promise
+}
+
+function deletePlan (){
+    const promise = axios.delete (`${BASE_URL}//subscriptions`, createHeaders())
+    return promise
+}
+
+export { postCadastro, postLogin, createHeaders, getPlanos, getPlan, postSignPlan, deletePlan }

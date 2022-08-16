@@ -39,7 +39,6 @@ function SignInPage() {
             localStorage.setItem('drivenplus', memberSerializado)
             const memberStorage= JSON.parse(localStorage.getItem('drivenplus'));
             setMember(memberStorage)
-
             data.membership ? navigate("/home"): navigate("/subscriptions") ;
 
         })

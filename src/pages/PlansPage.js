@@ -12,8 +12,7 @@ function BoxPlan({ idPlan, image, price, setIdPlan }) {
 
     function choosePlan(idPlan) {
         setIdPlan([idPlan])
-        /* const membershipSerializado = JSON.stringify({ ...member, membership: idPlan })
-        localStorage.setItem('drivenplus', membershipSerializado) */
+        
         
 
     }
